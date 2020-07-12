@@ -1,7 +1,7 @@
 #include "nrf_gps.h"
 
-#define UART_TX_BUF_SIZE 10  /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 255 /**< UART RX buffer size. */
+#define UART_TX_BUF_SIZE 128  /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 128 /**< UART RX buffer size. */
 
 #define GPS_RX_PIN 29
 #define GPS_TX_PIN 31

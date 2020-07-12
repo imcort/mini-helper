@@ -72,6 +72,10 @@
 #include "nrf_delay.h"
 
 #include "nrf_gps.h"
+#include "MS5611.h"
+#include "HDC1080.h"
+
+#include "iic_transfer_handler.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -627,8 +631,16 @@ int main(void)
     //printf("\r\nUART started.\r\n");
     NRF_LOG_INFO("Debug logging for UART over RTT started.");
 		sd_power_dcdc_mode_set(NRF_POWER_DCDC_ENABLE);
-		
+		NRF_LOG_FLUSH();
     advertising_start();
+		
+		twi_init();
+		
+		//MS5611begin(MS5611_ULTRA_HIGH_RES);
+		NRF_LOG_INFO("ID:%x",HDC1080_readManufacturerId());
+		//NRF_LOG_INFO("TEMP:%x",MS5611readTemperature());
+		
+		
 		
 
     // Enter main loop.

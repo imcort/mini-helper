@@ -402,6 +402,21 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\nrf_gps.c</FilePath>
             </File>
+            <File>
+              <FileName>iic_transfer_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\iic_transfer_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>MS5611.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\MS5611.c</FilePath>
+            </File>
+            <File>
+              <FileName>HDC1080.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\HDC1080.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1551,6 +1566,21 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>nrfx_twi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twi.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrfx_twim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twim.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_twi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_twi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3993,6 +4023,21 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\nrf_gps.c</FilePath>
             </File>
+            <File>
+              <FileName>iic_transfer_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\iic_transfer_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>MS5611.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\MS5611.c</FilePath>
+            </File>
+            <File>
+              <FileName>HDC1080.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\HDC1080.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5142,6 +5187,21 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>nrfx_twi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twi.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrfx_twim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twim.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_twi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_twi.c</FilePath>
             </File>
           </Files>
         </Group>
