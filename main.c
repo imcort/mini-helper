@@ -80,6 +80,8 @@
 #include "mem_manager.h"
 
 #include "lvgl.h"
+#include "vl53l1_api.h"
+#include "vl53l1_def.h"
 
 #include "iic_transfer_handler.h"
 
@@ -122,7 +124,8 @@ static ble_uuid_t m_adv_uuids[]          =                                      
     {BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}
 };
 
-
+APP_TIMER_DEF(millis_timer);
+uint32_t millis = 0;
 
 /**@brief Function for assert macro callback.
  *
@@ -141,6 +144,11 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 }
 
 
+static void millis_timer_handler(void *p_context)
+{
+		millis++;
+}
+
 /**@brief Function for initializing the timer module.
  */
 static void timers_init(void)
@@ -148,6 +156,11 @@ static void timers_init(void)
     ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 	
+	err_code = app_timer_create(&millis_timer, APP_TIMER_MODE_REPEATED, millis_timer_handler);
+  APP_ERROR_CHECK(err_code);
+	
+	err_code = app_timer_start(millis_timer, APP_TIMER_TICKS(1), NULL);
+  APP_ERROR_CHECK(err_code);
 	
 }
 
@@ -668,6 +681,18 @@ int main(void)
 		NRF_LOG_FLUSH();
 		
     advertising_start();
+		
+		twi_init();
+		//twi_scanner();
+		
+		VL53L1_Dev_t vl53;
+		vl53.I2cDevAddr = 0x29;
+		VL53L1_WaitDeviceBooted(&vl53);
+		
+		VL53L1_DeviceInfo_t devinfo;
+		VL53L1_GetDeviceInfo(&vl53, &devinfo);
+		
+		NRF_LOG_INFO("info:%d",devinfo.ProductRevisionMajor);
 		
 		
 		lv_ex_textarea_1();	
