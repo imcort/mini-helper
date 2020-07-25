@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define BOARD_SDA_PIN 7
+#define BOARD_SDA_PIN 6
 #define BOARD_SCL_PIN 8
 
 void twi_init(void);

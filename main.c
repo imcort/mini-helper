@@ -70,10 +70,16 @@
 #include "nrf_pwr_mgmt.h"
 
 #include "nrf_delay.h"
+#include "nrf_drv_clock.h"
 
 #include "nrf_gps.h"
 #include "MS5611.h"
 #include "HDC1080.h"
+#include "memory_lcd.h"
+
+#include "mem_manager.h"
+
+#include "lvgl.h"
 
 #include "iic_transfer_handler.h"
 
@@ -116,6 +122,8 @@ static ble_uuid_t m_adv_uuids[]          =                                      
     {BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}
 };
 
+
+
 /**@brief Function for assert macro callback.
  *
  * @details This function will be called in case of an assert in the SoftDevice.
@@ -132,12 +140,15 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
+
 /**@brief Function for initializing the timer module.
  */
 static void timers_init(void)
 {
     ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
+	
+	
 }
 
 /**@brief Function for the GAP initialization.
@@ -196,7 +207,7 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
 
     if (p_evt->type == BLE_NUS_EVT_RX_DATA)
     {
-        uint32_t err_code;
+//        uint32_t err_code;
 
         NRF_LOG_DEBUG("Received data from BLE NUS. Writing data on UART.");
         NRF_LOG_HEXDUMP_DEBUG(p_evt->params.rx_data.p_data, p_evt->params.rx_data.length);
@@ -596,6 +607,14 @@ static void idle_state_handle(void)
     }
 }
 
+static void lfclk_config(void)
+{
+  ret_code_t err_code = nrf_drv_clock_init();
+  APP_ERROR_CHECK(err_code);
+
+  nrf_drv_clock_lfclk_request(NULL);
+}
+
 
 /**@brief Function for starting advertising.
  */
@@ -605,6 +624,17 @@ static void advertising_start(void)
     APP_ERROR_CHECK(err_code);
 }
 
+lv_obj_t *ta1;
+
+void lv_ex_textarea_1(void)
+{
+    ta1 = lv_textarea_create(lv_scr_act(), NULL);
+    lv_obj_set_size(ta1, 144, 168);
+    lv_obj_align(ta1, NULL, LV_ALIGN_CENTER, 0, 0);
+    lv_textarea_set_text(ta1, "123abc");    /*Set an initial text*/
+    //lv_obj_set_event_cb(ta1, event_handler);
+}
+
 
 /**@brief Application main function.
  */
@@ -612,13 +642,17 @@ int main(void)
 {
     bool erase_bonds;
 	
-		gps_init();
+		//gps_init();
 		
-    gps_off();
-	
+    //gps_off();
+		lfclk_config();
     log_init();
-    timers_init();
-    buttons_leds_init(&erase_bonds);
+		nrf_mem_init();
+		timers_init();
+		disp_init();
+	
+		
+    //buttons_leds_init(&erase_bonds);
     power_management_init();
     ble_stack_init();
     gap_params_init();
@@ -632,21 +666,16 @@ int main(void)
     NRF_LOG_INFO("Debug logging for UART over RTT started.");
 		sd_power_dcdc_mode_set(NRF_POWER_DCDC_ENABLE);
 		NRF_LOG_FLUSH();
+		
     advertising_start();
 		
-		twi_init();
 		
-		//MS5611begin(MS5611_ULTRA_HIGH_RES);
-		NRF_LOG_INFO("ID:%x",HDC1080_readManufacturerId());
-		//NRF_LOG_INFO("TEMP:%x",MS5611readTemperature());
-		
-		
-		
+		lv_ex_textarea_1();	
 
     // Enter main loop.
     for (;;)
     {
-			
+				lv_task_handler();
         idle_state_handle();
     }
 }

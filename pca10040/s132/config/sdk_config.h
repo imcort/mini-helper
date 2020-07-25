@@ -53,7 +53,7 @@
  
 
 #ifndef BSP_BTN_BLE_ENABLED
-#define BSP_BTN_BLE_ENABLED 1
+#define BSP_BTN_BLE_ENABLED 0
 #endif
 
 // </h> 
@@ -3357,7 +3357,7 @@
 // <e> NRFX_SPIM_ENABLED - nrfx_spim - SPIM peripheral driver
 //==========================================================
 #ifndef NRFX_SPIM_ENABLED
-#define NRFX_SPIM_ENABLED 0
+#define NRFX_SPIM_ENABLED 1
 #endif
 // <q> NRFX_SPIM0_ENABLED  - Enable SPIM0 instance
  
@@ -3597,7 +3597,7 @@
 // <e> NRFX_SPI_ENABLED - nrfx_spi - SPI peripheral driver
 //==========================================================
 #ifndef NRFX_SPI_ENABLED
-#define NRFX_SPI_ENABLED 0
+#define NRFX_SPI_ENABLED 1
 #endif
 // <q> NRFX_SPI0_ENABLED  - Enable SPI0 instance
  
@@ -4309,7 +4309,7 @@
 // <e> NRFX_UARTE_ENABLED - nrfx_uarte - UARTE peripheral driver
 //==========================================================
 #ifndef NRFX_UARTE_ENABLED
-#define NRFX_UARTE_ENABLED 0
+#define NRFX_UARTE_ENABLED 1
 #endif
 // <o> NRFX_UARTE0_ENABLED - Enable UARTE0 instance 
 #ifndef NRFX_UARTE0_ENABLED
@@ -4430,7 +4430,7 @@
 // <e> NRFX_UART_ENABLED - nrfx_uart - UART peripheral driver
 //==========================================================
 #ifndef NRFX_UART_ENABLED
-#define NRFX_UART_ENABLED 1
+#define NRFX_UART_ENABLED 0
 #endif
 // <o> NRFX_UART0_ENABLED - Enable UART0 instance 
 #ifndef NRFX_UART0_ENABLED
@@ -5429,7 +5429,7 @@
 // <e> SPI_ENABLED - nrf_drv_spi - SPI/SPIM peripheral driver - legacy layer
 //==========================================================
 #ifndef SPI_ENABLED
-#define SPI_ENABLED 0
+#define SPI_ENABLED 1
 #endif
 // <o> SPI_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
  
@@ -5475,7 +5475,7 @@
 // <e> SPI1_ENABLED - Enable SPI1 instance
 //==========================================================
 #ifndef SPI1_ENABLED
-#define SPI1_ENABLED 0
+#define SPI1_ENABLED 1
 #endif
 // <q> SPI1_USE_EASY_DMA  - Use EasyDMA
  
@@ -5753,7 +5753,7 @@
  
 
 #ifndef TWI0_USE_EASY_DMA
-#define TWI0_USE_EASY_DMA 1
+#define TWI0_USE_EASY_DMA 0
 #endif
 
 // </e>
@@ -5830,7 +5830,7 @@
 // <268435456=> 1000000 baud 
 
 #ifndef UART_DEFAULT_CONFIG_BAUDRATE
-#define UART_DEFAULT_CONFIG_BAUDRATE 30801920
+#define UART_DEFAULT_CONFIG_BAUDRATE 2576384
 #endif
 
 // <o> UART_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
@@ -5854,7 +5854,7 @@
  
 
 #ifndef UART_EASY_DMA_SUPPORT
-#define UART_EASY_DMA_SUPPORT 0
+#define UART_EASY_DMA_SUPPORT 1
 #endif
 
 // <q> UART_LEGACY_SUPPORT  - Driver supporting Legacy mode
@@ -5873,7 +5873,7 @@
  
 
 #ifndef UART0_CONFIG_USE_EASY_DMA
-#define UART0_CONFIG_USE_EASY_DMA 0
+#define UART0_CONFIG_USE_EASY_DMA 1
 #endif
 
 // </e>
@@ -6796,13 +6796,13 @@
 // <e> MEM_MANAGER_ENABLED - mem_manager - Dynamic memory allocator
 //==========================================================
 #ifndef MEM_MANAGER_ENABLED
-#define MEM_MANAGER_ENABLED 0
+#define MEM_MANAGER_ENABLED 1
 #endif
 // <o> MEMORY_MANAGER_SMALL_BLOCK_COUNT - Size of each memory blocks identified as 'small' block.  <0-255> 
 
 
 #ifndef MEMORY_MANAGER_SMALL_BLOCK_COUNT
-#define MEMORY_MANAGER_SMALL_BLOCK_COUNT 1
+#define MEMORY_MANAGER_SMALL_BLOCK_COUNT 10
 #endif
 
 // <o> MEMORY_MANAGER_SMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'small' block. 
@@ -6816,7 +6816,7 @@
 
 
 #ifndef MEMORY_MANAGER_MEDIUM_BLOCK_COUNT
-#define MEMORY_MANAGER_MEDIUM_BLOCK_COUNT 0
+#define MEMORY_MANAGER_MEDIUM_BLOCK_COUNT 10
 #endif
 
 // <o> MEMORY_MANAGER_MEDIUM_BLOCK_SIZE -  Size of each memory blocks identified as 'medium' block. 
@@ -6830,7 +6830,7 @@
 
 
 #ifndef MEMORY_MANAGER_LARGE_BLOCK_COUNT
-#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 0
+#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 10
 #endif
 
 // <o> MEMORY_MANAGER_LARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'large' block. 
@@ -6844,7 +6844,7 @@
 
 
 #ifndef MEMORY_MANAGER_XLARGE_BLOCK_COUNT
-#define MEMORY_MANAGER_XLARGE_BLOCK_COUNT 0
+#define MEMORY_MANAGER_XLARGE_BLOCK_COUNT 2
 #endif
 
 // <o> MEMORY_MANAGER_XLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra large' block. 
@@ -6858,21 +6858,21 @@
 
 
 #ifndef MEMORY_MANAGER_XXLARGE_BLOCK_COUNT
-#define MEMORY_MANAGER_XXLARGE_BLOCK_COUNT 0
+#define MEMORY_MANAGER_XXLARGE_BLOCK_COUNT 2
 #endif
 
 // <o> MEMORY_MANAGER_XXLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra large' block. 
 // <i>  Size of each memory blocks identified as 'extra extra large' block. Memory block are recommended to be word-sized.
 
 #ifndef MEMORY_MANAGER_XXLARGE_BLOCK_SIZE
-#define MEMORY_MANAGER_XXLARGE_BLOCK_SIZE 3444
+#define MEMORY_MANAGER_XXLARGE_BLOCK_SIZE 2048
 #endif
 
 // <o> MEMORY_MANAGER_XSMALL_BLOCK_COUNT - Size of each memory blocks identified as 'extra small' block.  <0-255> 
 
 
 #ifndef MEMORY_MANAGER_XSMALL_BLOCK_COUNT
-#define MEMORY_MANAGER_XSMALL_BLOCK_COUNT 0
+#define MEMORY_MANAGER_XSMALL_BLOCK_COUNT 10
 #endif
 
 // <o> MEMORY_MANAGER_XSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra small' block. 
@@ -6886,7 +6886,7 @@
 
 
 #ifndef MEMORY_MANAGER_XXSMALL_BLOCK_COUNT
-#define MEMORY_MANAGER_XXSMALL_BLOCK_COUNT 0
+#define MEMORY_MANAGER_XXSMALL_BLOCK_COUNT 10
 #endif
 
 // <o> MEMORY_MANAGER_XXSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra small' block. 
@@ -6899,7 +6899,7 @@
 // <e> MEM_MANAGER_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef MEM_MANAGER_CONFIG_LOG_ENABLED
-#define MEM_MANAGER_CONFIG_LOG_ENABLED 0
+#define MEM_MANAGER_CONFIG_LOG_ENABLED 1
 #endif
 // <o> MEM_MANAGER_CONFIG_LOG_LEVEL  - Default Severity level
  
@@ -6910,7 +6910,7 @@
 // <4=> Debug 
 
 #ifndef MEM_MANAGER_CONFIG_LOG_LEVEL
-#define MEM_MANAGER_CONFIG_LOG_LEVEL 3
+#define MEM_MANAGER_CONFIG_LOG_LEVEL 4
 #endif
 
 // <o> MEM_MANAGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.

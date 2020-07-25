@@ -42,8 +42,8 @@ typedef enum
 } ms5611_osr_t;
 
 	bool MS5611begin(ms5611_osr_t osr);// = MS5611_HIGH_RES
-	float MS5611readTemperature();// = false
-	int32_t MS5611readPressure();// = false
+	float MS5611readTemperature(void);// = false
+	int32_t MS5611readPressure(void);// = false
 	float MS5611getAltitude(float pressure, float seaLevelPressure);// = 101325
 	float MS5611getSeaLevel(float pressure, float altitude);
 	void MS5611setOversampling(ms5611_osr_t osr);

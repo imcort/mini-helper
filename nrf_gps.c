@@ -3,9 +3,9 @@
 #define UART_TX_BUF_SIZE 128  /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 128 /**< UART RX buffer size. */
 
-#define GPS_RX_PIN 29
-#define GPS_TX_PIN 31
-#define GPS_EN_PIN 3
+#define GPS_RX_PIN 9
+#define GPS_TX_PIN 10
+#define GPS_EN_PIN 5
 
 static uint8_t     rx_buf[UART_RX_BUF_SIZE];                                                  
 static uint8_t     tx_buf[UART_TX_BUF_SIZE];  

@@ -71,7 +71,6 @@ HDC1080_Registers HDC1080_readRegister() {
 
 void HDC1080_writeRegister(HDC1080_Registers reg) {
 	
-	ret_code_t err_code;
 	uint8_t sendbuf[2] = {reg.rawData, 0x00};
 	
 	twi_writeRegisters(HDC1080_ADDR, HDC1080_CONFIGURATION, sendbuf, 2);
@@ -85,7 +84,6 @@ void HDC1080_heatUp(uint8_t seconds) {
 	reg.Heater = 1;
 	reg.ModeOfAcquisition = 1;
 	HDC1080_writeRegister(reg);
-	ret_code_t err_code;
 
 	uint8_t buf[4];
 	for (int i = 1; i < (seconds*66); i++) 
@@ -116,8 +114,6 @@ uint16_t HDC1080_readDeviceId() {
 }
 
 int16_t HDC1080_readData(uint8_t pointer) {
-	
-	ret_code_t err_code;
 	
 	uint8_t recvbuf[2];
 	
