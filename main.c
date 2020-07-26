@@ -51,6 +51,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 #include "nordic_common.h"
 #include "nrf.h"
 #include "ble_hci.h"
@@ -89,6 +90,8 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+int16_t vl53_getMM(void);
+
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define DEVICE_NAME                     "Nordic_UART"                               /**< Name of device. Will be included in the advertising data. */
@@ -125,6 +128,7 @@ static ble_uuid_t m_adv_uuids[]          =                                      
 };
 
 APP_TIMER_DEF(millis_timer);
+APP_TIMER_DEF(dist_meas_timer);
 uint32_t millis = 0;
 
 /**@brief Function for assert macro callback.
@@ -149,6 +153,11 @@ static void millis_timer_handler(void *p_context)
 		millis++;
 }
 
+static void dist_meas_timer_handler(void *p_context)
+{
+		vl53_getMM();
+}
+
 /**@brief Function for initializing the timer module.
  */
 static void timers_init(void)
@@ -159,7 +168,13 @@ static void timers_init(void)
 	err_code = app_timer_create(&millis_timer, APP_TIMER_MODE_REPEATED, millis_timer_handler);
   APP_ERROR_CHECK(err_code);
 	
+	err_code = app_timer_create(&dist_meas_timer, APP_TIMER_MODE_REPEATED, dist_meas_timer_handler);
+  APP_ERROR_CHECK(err_code);
+	
 	err_code = app_timer_start(millis_timer, APP_TIMER_TICKS(1), NULL);
+  APP_ERROR_CHECK(err_code);
+	
+	err_code = app_timer_start(dist_meas_timer, APP_TIMER_TICKS(500), NULL);
   APP_ERROR_CHECK(err_code);
 	
 }
@@ -637,17 +652,72 @@ static void advertising_start(void)
     APP_ERROR_CHECK(err_code);
 }
 
-lv_obj_t *ta1;
+lv_obj_t * bar1;
 
-void lv_ex_textarea_1(void)
+void lv_ex_bar_1(void)
 {
-    ta1 = lv_textarea_create(lv_scr_act(), NULL);
-    lv_obj_set_size(ta1, 144, 168);
-    lv_obj_align(ta1, NULL, LV_ALIGN_CENTER, 0, 0);
-    lv_textarea_set_text(ta1, "123abc");    /*Set an initial text*/
-    //lv_obj_set_event_cb(ta1, event_handler);
+    bar1 = lv_bar_create(lv_scr_act(), NULL);
+    lv_obj_set_size(bar1, 120, 20);
+    lv_obj_align(bar1, NULL, LV_ALIGN_CENTER, 0, 0);
+    lv_bar_set_anim_time(bar1, 500);
+		lv_bar_set_range(bar1, 0, 100);
+    lv_bar_set_value(bar1, 100, LV_ANIM_ON);
 }
 
+VL53L1_Dev_t                   dev;
+VL53L1_DEV                     Dev = &dev;
+
+void vl53_init(){
+	
+		int status;
+		uint8_t byteData;
+		uint16_t wordData;
+	
+		Dev->I2cDevAddr = 0x52;
+		
+		VL53L1_software_reset(Dev);
+	
+		VL53L1_RdByte(Dev, 0x010F, &byteData);
+		NRF_LOG_INFO("VL53L1X Model_ID: %x", byteData);
+		VL53L1_RdByte(Dev, 0x0110, &byteData);
+		NRF_LOG_INFO("VL53L1X Module_Type: %x", byteData);
+
+		NRF_LOG_INFO("Autonomous Ranging Test");
+		status = VL53L1_WaitDeviceBooted(Dev);
+		status = VL53L1_DataInit(Dev);
+		status = VL53L1_StaticInit(Dev);
+		status = VL53L1_SetDistanceMode(Dev, VL53L1_DISTANCEMODE_LONG);
+		status = VL53L1_SetMeasurementTimingBudgetMicroSeconds(Dev, 50 * 1000);
+		status = VL53L1_SetInterMeasurementPeriodMilliSeconds(Dev, 55);
+		status = VL53L1_StartMeasurement(Dev);
+		
+		if(status)
+		{
+			NRF_LOG_INFO("VL53L1_StartMeasurement failed");
+		}
+		
+		
+	
+}
+
+int16_t vl53_getMM(void){
+		
+		VL53L1_WaitMeasurementDataReady(Dev);
+		
+		VL53L1_RangingMeasurementData_t RangingData;
+		
+		VL53L1_GetRangingMeasurementData(Dev, &RangingData);
+		
+		NRF_LOG_INFO("RangeStatus %d, RangeMM %d, SignalRate %d, AmbientRate %d", RangingData.RangeStatus, RangingData.RangeMilliMeter, RangingData.SignalRateRtnMegaCps, RangingData.AmbientRateRtnMegaCps);
+		
+		VL53L1_ClearInterruptAndStartMeasurement(Dev);
+	
+		if(RangingData.RangeStatus == 0)
+			lv_bar_set_value(bar1, RangingData.RangeMilliMeter, LV_ANIM_ON);
+	
+		return RangingData.RangeMilliMeter;
+
+}
 
 /**@brief Application main function.
  */
@@ -683,20 +753,36 @@ int main(void)
     advertising_start();
 		
 		twi_init();
-		//twi_scanner();
+		vl53_init();
 		
-		VL53L1_Dev_t vl53;
-		vl53.I2cDevAddr = 0x29;
-		VL53L1_WaitDeviceBooted(&vl53);
+//		VL53L1_Dev_t vl53;
+//		vl53.I2cDevAddr = 0x52;
+//		
+//		VL53L1_software_reset(&vl53);
+//		VL53L1_WaitDeviceBooted(&vl53);
+//		VL53L1_DataInit(&vl53);
+//		VL53L1_StaticInit(&vl53);
+//		VL53L1_StartMeasurement(&vl53);
+//		
+//		VL53L1_WaitMeasurementDataReady(&vl53);
+//		
+//		VL53L1_RangingMeasurementData_t result;
+//		VL53L1_GetRangingMeasurementData(&vl53, &result);
+//		
+//		NRF_LOG_INFO("distance:%d",result.RangeMilliMeter);
+//		
+//		VL53L1_ClearInterruptAndStartMeasurement(&vl53);
+//		uint8_t rdy = 0;
+//		do{
+//			VL53L1_GetMeasurementDataReady(&vl53, &rdy);
+//		} while (rdy != 1);
 		
-		VL53L1_DeviceInfo_t devinfo;
-		VL53L1_GetDeviceInfo(&vl53, &devinfo);
 		
-		NRF_LOG_INFO("info:%d",devinfo.ProductRevisionMajor);
+//		VL53L1_DeviceInfo_t devinfo;
+//		VL53L1_GetDeviceInfo(&vl53, &devinfo);
+	
+		lv_ex_bar_1();	
 		
-		
-		lv_ex_textarea_1();	
-
     // Enter main loop.
     for (;;)
     {

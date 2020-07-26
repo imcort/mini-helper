@@ -5,6 +5,7 @@
 #include "lvgl.h"
 #include "app_timer.h"
 #include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define SPI_INSTANCE  1
 static const nrf_drv_spi_t spi = NRF_DRV_SPI_INSTANCE(SPI_INSTANCE);
@@ -65,6 +66,7 @@ void my_rounder_cb(lv_disp_drv_t * disp_drv, lv_area_t * area)
 void my_printf(lv_log_level_t level, const char * file, int line, const char * fn_name, const char * dsc)
 {
 	NRF_LOG_INFO("level:%d,file:%s,line:%d,dsc:%s",level,file,line,dsc);
+	NRF_LOG_FLUSH();
 }
 
 void disp_spi_init(){

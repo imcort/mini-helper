@@ -6802,7 +6802,7 @@
 
 
 #ifndef MEMORY_MANAGER_SMALL_BLOCK_COUNT
-#define MEMORY_MANAGER_SMALL_BLOCK_COUNT 10
+#define MEMORY_MANAGER_SMALL_BLOCK_COUNT 20
 #endif
 
 // <o> MEMORY_MANAGER_SMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'small' block. 
@@ -6816,7 +6816,7 @@
 
 
 #ifndef MEMORY_MANAGER_MEDIUM_BLOCK_COUNT
-#define MEMORY_MANAGER_MEDIUM_BLOCK_COUNT 10
+#define MEMORY_MANAGER_MEDIUM_BLOCK_COUNT 20
 #endif
 
 // <o> MEMORY_MANAGER_MEDIUM_BLOCK_SIZE -  Size of each memory blocks identified as 'medium' block. 
@@ -6830,7 +6830,7 @@
 
 
 #ifndef MEMORY_MANAGER_LARGE_BLOCK_COUNT
-#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 10
+#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 20
 #endif
 
 // <o> MEMORY_MANAGER_LARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'large' block. 
@@ -6872,7 +6872,7 @@
 
 
 #ifndef MEMORY_MANAGER_XSMALL_BLOCK_COUNT
-#define MEMORY_MANAGER_XSMALL_BLOCK_COUNT 10
+#define MEMORY_MANAGER_XSMALL_BLOCK_COUNT 20
 #endif
 
 // <o> MEMORY_MANAGER_XSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra small' block. 
@@ -6886,7 +6886,7 @@
 
 
 #ifndef MEMORY_MANAGER_XXSMALL_BLOCK_COUNT
-#define MEMORY_MANAGER_XXSMALL_BLOCK_COUNT 10
+#define MEMORY_MANAGER_XXSMALL_BLOCK_COUNT 20
 #endif
 
 // <o> MEMORY_MANAGER_XXSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra small' block. 

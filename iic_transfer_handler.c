@@ -185,18 +185,19 @@ void twi_vl53l1x_seq_write(uint8_t addr, uint16_t index, uint8_t *data, uint16_t
 	
 	iic_sendbuf[0] = index >> 8;
 	iic_sendbuf[1] = index;
+	memcpy(iic_sendbuf + 2, data, length);
 	
 	m_xfer_done = false;
-	err_code = nrf_drv_twi_tx(&m_twi, addr, iic_sendbuf, 2, false);
+	err_code = nrf_drv_twi_tx(&m_twi, addr, iic_sendbuf, length + 2, false);
 	APP_ERROR_CHECK(err_code);
 	while (m_xfer_done == false) __WFE();
 	
-	memcpy(iic_sendbuf, data, length);
 	
-	m_xfer_done = false;
-	err_code = nrf_drv_twi_tx(&m_twi, addr, iic_sendbuf, length, false);
-	APP_ERROR_CHECK(err_code);
-	while (m_xfer_done == false) __WFE();
+//	
+//	m_xfer_done = false;
+//	err_code = nrf_drv_twi_tx(&m_twi, addr, iic_sendbuf, length, false);
+//	APP_ERROR_CHECK(err_code);
+//	while (m_xfer_done == false) __WFE();
 	
 }
 
